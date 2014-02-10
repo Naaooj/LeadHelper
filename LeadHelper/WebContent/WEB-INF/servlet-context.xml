@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/data/mongo
+        http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<mongo:mongo host="127.0.0.1" port="27017" />
+	<mongo:db-factory dbname="leadhelper" />
+	<mongo:repositories base-package="fr.naoj.leadhelper.repository" />
+
+	<!-- Scans within the base package of the application for @Components to 
+		configure as beans -->
+	<!-- @Controller, @Service, @Configuration, etc. -->
+	<context:component-scan base-package="fr.naoj.leadhelper" />
+
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<mvc:annotation-driven />
+
+	<mvc:default-servlet-handler />
+	<mvc:resources location="/resources/" mapping="/resources/**" />
+
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename" value="locale/messages" />
+	</bean>
+
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+    	<constructor-arg ref="mongo" />
+    	<constructor-arg value="angular" />
+  	</bean>
+</beans>
