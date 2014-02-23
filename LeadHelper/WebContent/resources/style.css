@@ -5,14 +5,163 @@
 legend {
 	color: #005580;
 	font-weight: bold;
+	border-bottom: none;
+	width: auto;
+	margin-bottom: 0;
 }
 fieldset {
 	color: #000;
 	background-color: #fff;
+	border: 2px solid #ddd;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-box-shadow: inset 0 1px 0 #ffffff;
+	-moz-box-shadow: inset 0 1px 0 #ffffff;
+	box-shadow: inset 0 1px 0 #ffffff;
+	padding: 5px;
+	margin: 5px;
 }
 
-ul > li {
+.meetingDateGroup {
+	width: 300px;
+}
+
+input[type="date"] {
+	line-height: 28px;
+	width: 100%;
+}
+input[type="checkbox"] {
+ 	outline: none;
+}
+input[type="checkbox"]:focus {
+	outline: none;
+}
+
+#pointList,
+#meetingList {
+	list-style-type: none;
+	padding: 0;
+}
+#meetingList li {
 	cursor: pointer;
+}
+
+#meetingList {
+	width: 300px;
+	margin-top: 3px;
+	box-shadow: none;
+}
+
+#meetingList .active {
+	color: #fff;ª
+}
+
+#meetingContainer {
+	padding-top: 20px;
+	padding-left: 50px;
+}
+#remove-meeting-btn {
+	display: none;
+	margin: 0 auto;
+	color: #000;
+	font-size: 22px;
+	position: absolute;
+	top: -1px;
+	right: 5px;
+	width: 30px;
+	height: 30px;
+	border: none;
+	background: none;
+}
+.breadcrumb:hover #remove-meeting-btn {
+	display: block;
+}
+#remove-meeting-btn:after {
+	content: '✖';
+}
+#meetingPanel .panel-body {
+	margin: 0;
+	padding: 0;
+}
+#meetingPanel .panel-heading input {
+	color: #000;
+}
+
+.notEditing {
+	display: none;
+}
+
+.editingMeeting {
+	display: block;
+}
+
+.pointInput {
+	width: 300px;
+}
+
+#pointList .edit {
+	display: none;
+}
+#pointList > div > div {
+	display: table-cell;
+}
+#pointList > div .toggleContainer {
+	width: 40px;
+	padding: 4px;
+}
+#pointList > div .toggle {
+	padding-right: 6px;
+	width: 30px;
+	margin: 0 auto;
+	border: none;
+	-webkit-appearance: none;
+	-ms-appearance: none;
+	-o-appearance: none;
+	appearance: none;
+}
+#pointList > div .toggle:after {
+	content: '✔';
+	font-size: 20px;
+	color: #d9d9d9;
+	text-shadow: 0 -1px 0 #bfbfbf;
+}
+#pointList .checked .viewPoint>label {
+	color: #c5c5c5;
+	text-decoration: line-through;
+}
+#pointList > div .toggle:checked:after {
+	color: #2d6ca2;
+	text-shadow: 0 1px 0 #2d6ca2;
+	bottom: 1px;
+	position: relative;
+}
+#pointList > div:first-child {
+	
+}
+#pointList > div:last-child {
+	margin: 0px;
+}
+#pointList > div {
+	margin-bottom: -1px;
+	padding: 6px;
+	border: 1px solid #ccc;
+	display: table;
+	width: 100%;
+}
+.list-group-item:hover,
+#pointList > div:hover {
+	background-color: #f5f5f5;
+}
+#pointList label {
+	font-weight: normal;
+	font-size: 20px;
+}
+.editing label {
+	display: none;
+}
+#pointList .editing .edit {
+	display: block;
 }
 
 #systemStatus {
@@ -23,63 +172,93 @@ ul > li {
 	text-align: center;
 }
 
-.dragList > ul {
-	list-style-type: none;
-	padding: 0 4px;
+.btn {	
 }
 
-.dragList > ul > li {
-	display: block;
-	width: 100%;
-	padding: 2px;
+.breadcrumb {
+	position: relative;
+	padding:7px 14px;
+	margin:0 0 18px;
+	list-style:none;
+	background-color:#fbfbfb;
+	background-image:-moz-linear-gradient(top, #ffffff, #f5f5f5);
+	background-image:-ms-linear-gradient(top, #ffffff, #f5f5f5);
+	background-image:-webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#f5f5f5));
+	background-image:-webkit-linear-gradient(top, #ffffff, #f5f5f5);
+	background-image:-o-linear-gradient(top, #ffffff, #f5f5f5);
+	background-image:linear-gradient(top, #ffffff, #f5f5f5);
+	background-repeat:repeat-x;
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f5f5f5', GradientType=0);
+	border:1px solid #ddd;
+	-webkit-border-radius:3px;
+	-moz-border-radius:3px;
+	border-radius:3px;
+	-webkit-box-shadow:inset 0 1px 0 #ffffff;
+	-moz-box-shadow:inset 0 1px 0 #ffffff;
+	box-shadow:inset 0 1px 0 #ffffff;
 }
 
-.dragList > ul > li > div {
-	width: 100%;
-	display: block;
-}
-
-.dropContainer {
-	height: 30px;
+.calendar {
 	display: table;
-	width: 100%;
+	border: 1px solid black;
+	border-bottom: none;
 }
-.multiDrop {
+.calendar .calendar-row {
+	display: table-row;
+}
+.calendar .calendar-header-tb .calendar-prev,
+.calendar .calendar-header-tb .calendar-next {
 	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+	width: 100px;
+	height: 40px;
+	cursor: pointer;
 }
-.commonDropHidden {
-	visibility: hidden; 
-	border: 0 dashed silver;
-	height: 0;
+.calendar .calendar-header {
+	display: table-caption;
+	border: 1px solid black;
+	border-bottom: none;
 }
-.commonDropVisible {
-	visibility: visible;
-	height: 100%;
-	top: 0;
-	border: 2px dashed silver;
+.calendar .calendar-header-tb {
+	display: table;
 }
-
-.draggableElement {
-	
+.calendar .group {
+	display: table-row-group
 }
-
-.draggableElementHidden {
-	border: none;
-	padding: 0;	
+.calendar .calendar-header-tb .calendar-title {
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+	height: 40px;
+	width: 501px;
+	border-left: 1px solid black;
+	border-right: 1px solid black;
 }
-.draggableElementVisible {
-	border: 1px solid gray;
-	padding: 2px;
-	width: 100%;
-	/* hack to work with spans...*/
-	display: inherit;
+.calendar .calendar-cell {
+	display: table-cell;
+	width: 100px;
+	height: 100px;
+	cursor: pointer;
+	border-right: 1px solid black;
+	border-bottom: 1px solid black;
 }
-
-.linkStudentToCourseDrop {
-	
+.calendar .calendar-cell:last-child {
+	border-right: none;
 }
-.linkTeacherToCourseDrop {
-	
+.calendar .other-month {
+	background-color: #dcdcdc;
+}
+.calendar .other-month:hover {
+	background-color: #bdbdbd;
+}
+.calendar .current-month {
+	color: #fff;
+	background-color: #2d6ca2;
+}
+.calendar .current-month:hover {
+	color: #000;
+	background-color: #fff;
 }
 
 @media (min-width: 1024px) {
@@ -92,13 +271,13 @@ ul > li {
 	
 	.array > div.left {
 		display: table-cell;
-		width: 66.6%;
+		width: 50%;
 		height: 100%;
 	}
 	
 	.array > div.right {
 		display: table-cell;
-		width: 33.3%;
+		width: 50%;
 		height: 100%;
 	}
 	

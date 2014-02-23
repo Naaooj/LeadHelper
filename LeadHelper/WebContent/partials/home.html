@@ -1,10 +1,63 @@
+
+
 <div style="margin: 0 auto;">
 	<div class="array">
 		<div class="left">
-			left
+			<fieldset class="column">
+				<legend>Meeting</legend>
+				<div ng-controller="MeetingCtrl as meeting">
+					<form id="addMeetingForm" ng-submit="addMeeting()">
+						<div class="input-group meetingDateGroup">
+							<input type="date" name="dt" ng-model="meetingDate" ng-change="changeSubmitLabel()" required />
+							<span class="input-group-btn">
+								<input type="submit" class="btn btn-primary" value="Ajouter"></input>
+							</span>
+						</div>
+						<span ng-show="addMeetingForm.dt.$error.required">Date requise!</span>
+					</form>
+					
+					<ul id="meetingList" class="list-group">
+						<li class="list-group-item" ng-repeat="meeting in meetings track by meeting.meetingDate" ng-class="{active: meeting==editedMeeting}">
+							<div ng-click="editMeeting(meeting)" class="viewMeeting">{{meeting.meetingDate | date:'dd/MM/yyyy'}}</div>
+						</li>
+					</ul>
+					
+					<div id="meetingContainer" ng-class="{notEditing: editedMeeting == null, editingMeeting: editedMeeting != null}">
+						<div class="breadcrumb">Meeting du {{editedMeeting.meetingDate | date:'dd/MM/yyyy'}}
+							<button id="remove-meeting-btn" ng-click="removeMeeting(editedMeeting)"></button>
+						</div>
+						<div id="meetingPanel" class="panel panel-primary">
+							<div class="panel-heading">
+								<input type="text" class="pointInput" ng-model="point" placeholder="Point énoncé..." point-validate="addPoint()" />
+							</div>
+							<div class="panel-body">
+								<div id="pointList">
+									<div ng-repeat="point in points | filter:statusFilter track by $index" ng-class="{editing: point == editedPoint, checked: point.completed}">
+										<div class="toggleContainer">
+											<input type="checkbox" class="toggle" ng-model="point.completed"></input>
+										</div>
+										<div class="viewPoint">
+											<label ng-dblclick="editPoint(point)">{{point.title}}</label>
+										</div>
+										<form ng-submit="pointEdited(point)">
+											<input ng-model="point.title" ng-trim="false" class="edit pointInput" ng-blur="pointEdited(point)" point-escape="revertPoint(point)" point-focus="point == editedPoint"/>
+										</form>
+									</div>
+								</div>
+								<button type="button" class="btn btn-sm btn-primary" ng-click="saveMeeting()">Sauvegarder</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</fieldset>
 		</div>
 		<div class="right">
-			right
+			<fieldset class="column">
+				<legend>Planning</legend>
+				<div ng-controller="PlanningCtrl as planning">
+					<div id="calendarContainer"></div>
+				</div>
+			</fieldset>
 		</div>
 	</div>
 </div>
