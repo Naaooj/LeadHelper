@@ -9,7 +9,11 @@ homeLeadCtrls
    	}
 ])
 .controller('MeetingCtrl', function MeetingCtrl($scope, $filter, $http, $injector, pointStorage, filterFilter) {
-	var meetings = $scope.meetings = pointStorage.get();
+	var meetings = $scope.meetings = [];
+	
+	pointStorage.get(function(results) {
+		meetings = $scope.meetings = results;
+	});
 	var points = $scope.points = [];
 	
 	// Defining some var for the controller
@@ -17,7 +21,7 @@ homeLeadCtrls
 	$scope.editedPoint = null;
 	
 	$scope.changeSubmitLabel = function() {
-		var val = meetings.some(function(e) {
+		var val = $scope.meetings.some(function(e) {
 			return (e.meetingDate == $scope.meetingDate);
 		});
 		var lbl;
@@ -27,14 +31,13 @@ homeLeadCtrls
 			lbl = "Ajouter";
 		}
 		$('#addMeetingForm').find(":submit").attr('value', lbl);
-		
 	};
 	
 	$scope.addMeeting = function() {
 		var meetingDate = $scope.meetingDate;
 		if (meetingDate) {
 			var meeting = null;
-			var val = meetings.some(function(e) {
+			var val = $scope.meetings.some(function(e) {
 				if (e.meetingDate == $scope.meetingDate) {
 					meeting = e;
 					return true;
@@ -46,8 +49,12 @@ homeLeadCtrls
 				$scope.removeMeeting();
 			} else {
 				meetings.push({
+					id: null,
 					meetingDate: meetingDate,
-					points: []
+					meetingPoints: []
+				});
+				meetings.sort(function(m1, m2) {
+					return Date.parse(m2.meetingDate) - Date.parse(m1.meetingDate);
 				});
 			}
 			$scope.changeSubmitLabel();
@@ -56,14 +63,15 @@ homeLeadCtrls
 	
 	$scope.editMeeting = function(meeting) {
 		if ($scope.editedMeeting && $scope.editedMeeting == meeting) {
-			$scope.editedMeeting = null;
+			$scope.saveMeeting();
 		} else {
 			$scope.editedMeeting = meeting;
-			points = $scope.points = meeting.points;
+			points = $scope.points = meeting.meetingPoints;
 		}
 	};
 	
 	$scope.saveMeeting = function() {
+		pointStorage.saveMeeting($scope.editedMeeting);
 		$scope.editedMeeting = null;
 	};
 	
@@ -114,6 +122,7 @@ homeLeadCtrls
 		bootbox.confirm("Etes-vous sûr ?", function(result) {
 			if (result == true) {
 				$scope.meetings.splice(meetings.indexOf($scope.editedMeeting), 1);
+				pointStorage.deleteMeeting($scope.editedMeeting);
 				$scope.editedMeeting = null;
 				$scope.$apply();
 			}
